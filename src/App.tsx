@@ -21,6 +21,14 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [currentView, setCurrentView] = useState<'chat' | 'phone'>('chat');
 
+  useEffect(() => {
+    const leadIdKey = 'leadId';
+    const newLeadId = Math.floor(Math.random() * 90000000) + 10000000;
+    localStorage.setItem(leadIdKey, newLeadId.toString());
+    console.log(`ID do Lead (numérico) gerado para esta sessão: ${newLeadId}`);
+  }, []);
+
+
   // Load AI models on mount
   useEffect(() => {
     const loadAIModels = async () => {
@@ -94,7 +102,7 @@ function App() {
 
   const handleCloseConversation = (conversationId: string) => {
     const conversationToClose = chatState.activeConversations.find(c => c.id === conversationId);
-    
+
     if (conversationToClose && conversationToClose.messages.length > 1) {
       // Save to history if it has user messages
       setChatState(prev => ({
@@ -217,7 +225,7 @@ function App() {
               onSelectAI={handleSelectAI}
               onStartConversation={handleStartConversation}
             />
-            
+
             {/* Custom AI Creation Card */}
             <div className="flex justify-center">
               <div className="w-full max-w-sm">
@@ -236,23 +244,22 @@ function App() {
                     Suas IAs criadas especificamente para diferentes nichos de negócio
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {customAIs.map((ai) => {
                     const isSelected = chatState.selectedAIs.includes(ai.id);
-                    
+
                     return (
                       <div
                         key={ai.id}
-                        className={`relative group transition-all duration-300 ${
-                          isSelected ? 'scale-105' : 'hover:scale-102'
-                        }`}
+                        className={`relative group transition-all duration-300 ${isSelected ? 'scale-105' : 'hover:scale-102'
+                          }`}
                       >
                         {/* Custom AI Card */}
                         <div className={`
                           relative p-6 rounded-2xl backdrop-blur-xl border transition-all duration-300
-                          ${isSelected 
-                            ? 'bg-gradient-to-br from-blue-500/20 to-purple-600/20 border-blue-400/50 shadow-xl shadow-blue-500/20' 
+                          ${isSelected
+                            ? 'bg-gradient-to-br from-blue-500/20 to-purple-600/20 border-blue-400/50 shadow-xl shadow-blue-500/20'
                             : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                           }
                         `}>
@@ -278,7 +285,7 @@ function App() {
                           <div className="text-center mb-4">
                             <h3 className="text-lg font-semibold text-white mb-2">{ai.name}</h3>
                             <p className="text-sm text-gray-400 mb-3">{ai.description}</p>
-                            
+
                             {/* Specialties */}
                             <div className="flex flex-wrap gap-1 justify-center mb-4">
                               {ai.specialties.map((specialty, index) => (
