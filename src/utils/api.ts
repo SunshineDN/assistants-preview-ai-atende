@@ -46,6 +46,42 @@ export const sendMessageToAI = async (aiId: string, message: string): Promise<st
   return randomResponse;
 };
 
+export const createCustomAI = async (niche: string): Promise<any> => {
+  // This would be your actual API call
+  try {
+    const response = await api.post('/custom-ai', { niche });
+    return response.data;
+  } catch (error) {
+    // Mock response for demonstration
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    return {
+      id: `custom-${Date.now()}`,
+      name: `IA ${niche}`,
+      description: `Especialista em ${niche} com conhecimento avançado do setor`,
+      status: 'online',
+      avatar: '🎯',
+      specialties: [niche, 'Consultoria', 'Estratégia'],
+      isCustom: true,
+    };
+  }
+};
+
+export const executeAIWithPhone = async (aiId: string, phoneNumber: string): Promise<any> => {
+  // This would be your actual API call
+  try {
+    const response = await api.post('/execute-ai-phone', { aiId, phoneNumber });
+    return response.data;
+  } catch (error) {
+    // Mock response for demonstration
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    return {
+      success: true,
+      message: 'IA executada com sucesso para o número fornecido',
+      executionId: `exec-${Date.now()}`,
+    };
+  }
+};
+
 export const getAIModels = async () => {
   // Mock data - replace with actual API call
   return [

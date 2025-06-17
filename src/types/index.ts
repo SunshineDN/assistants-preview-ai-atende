@@ -5,6 +5,7 @@ export interface AIModel {
   status: 'online' | 'offline' | 'busy';
   avatar: string;
   specialties: string[];
+  isCustom?: boolean;
 }
 
 export interface Message {
@@ -30,4 +31,11 @@ export interface ChatState {
   conversationHistory: Conversation[];
   selectedAIs: string[];
   isHistoryOpen: boolean;
+}
+
+export interface PhoneExecution {
+  aiId: string;
+  phoneNumber: string;
+  timestamp: Date;
+  status: 'executing' | 'completed' | 'failed';
 }
