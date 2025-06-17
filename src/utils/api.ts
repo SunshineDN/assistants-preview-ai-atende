@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Message } from '../types';
+// import { Message } from '../types';
 
 // Mock API configuration - replace with your actual API endpoints
 const API_BASE_URL = 'https://teste.aiatende.dev.br/api/openai-web';
@@ -11,8 +11,8 @@ export const api = axios.create({
   },
 });
 
-function getLeadId(): string | null {
-  return localStorage.getItem('leadId');
+function getLeadId(): number | null {
+  return Number(localStorage.getItem('leadId'));
 }
 
 // Mock API functions - replace with actual API calls
@@ -51,7 +51,7 @@ export const sendMessageToAI = async (aiId: string, message: string): Promise<st
 
   try {
     const lead_id = getLeadId();
-    const response = await api.post('/send-message' + aiId ? `/${aiId}` : '', { message, lead_id });
+    const response = await api.post(`/send-message/${aiId ? aiId : "" }`, { message, lead_id });
     return response.data.message;
   } catch (error) {
     // Mock response for demonstration
